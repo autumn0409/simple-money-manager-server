@@ -1,0 +1,9 @@
+.category-list {
+    margin: 2rem;
+}
+
+.detail-item-title {
+    width: 15%;
+    color: rgb(131, 131, 131);
+    font-size: 90%;
+}

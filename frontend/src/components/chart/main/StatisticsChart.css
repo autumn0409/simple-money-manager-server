@@ -1,0 +1,9 @@
+.chart-loading {
+    font-size: 2.5rem;
+    color: rgb(37, 162, 246);
+}
+
+.chart-loading-container {
+    width: 100%;
+    height: 100%;
+}

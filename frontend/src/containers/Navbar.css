@@ -1,0 +1,10 @@
+.navbar {
+    box-shadow: 0 2px rgba(197, 197, 197, 0.5);
+    height: 4rem;
+}
+
+#navbar-category-title {
+    font-weight: 200;
+    margin-bottom: 0;
+    margin-left: 5rem;
+}

@@ -1,0 +1,7 @@
+#add-record-btn {
+    margin-right: 1.5rem;
+}
+
+#add-record-btn:focus {
+    box-shadow: none;
+}
