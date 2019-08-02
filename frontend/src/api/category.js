@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const categoryBaseUrl = 'http://localhost:8080/api/category';
+// const categoryBaseUrl = 'http://localhost:8080/api/category';
+
+const categoryBaseUrl = "https://oop-money-manager.herokuapp.com/api/category"
 
 export const getCategories = (type) => {
     let url = `${categoryBaseUrl}?type=${type}`;

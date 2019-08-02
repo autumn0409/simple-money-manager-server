@@ -1,5 +1,9 @@
 # Simple-Accounting-System
 
+## Demo
+
+<https://oop-money-manager.herokuapp.com/>
+
 ## 系統架構及功能簡介
 
 此系統主要是想幫助個人的日常帳務紀錄，故除了提供直覺美觀的 GUI 外，也提供了資料庫存取來儲存這些帳務紀錄。

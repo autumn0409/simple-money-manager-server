@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const recordBaseUrl = 'http://localhost:8080/api/record';
+// const recordBaseUrl = 'http://localhost:8080/api/record';
+
+const recordBaseUrl = "https://oop-money-manager.herokuapp.com/api/record"
 
 export const getMonthRecord = (year, month) => {
 

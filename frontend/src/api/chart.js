@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const chartBaseUrl = 'http://localhost:8080/api/chart';
+// const chartBaseUrl = 'http://localhost:8080/api/chart';
+
+const chartBaseUrl = "https://oop-money-manager.herokuapp.com/api/chart"
 
 export const getChart = (year, month, type) => {
     let url = `${chartBaseUrl}?year=${year}&month=${month}&type=${type}`;
