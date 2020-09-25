@@ -1,4 +1,4 @@
-# Simple-Accounting-System
+# Simple Money Manager
 
 ## Demo
 
