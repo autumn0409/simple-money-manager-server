@@ -1,13 +1,13 @@
 const db = require("../models");
 
-const { category } = db;
+const Category = db.category;
 
 module.exports = {
   getCategories: async (req, res) => {
     const { type } = req.query;
 
     try {
-      const queryResult = await category.findAll({
+      const queryResult = await Category.findAll({
         where: { type },
         attributes: ["name"],
       });
@@ -24,11 +24,18 @@ module.exports = {
     const { type, name } = req.query;
 
     try {
-      await category.create({
-        type,
-        name,
-      });
-      res.status(200).send("Create success");
+      const isNewCategory = await Category.findOrCreate({
+        where: {
+          type,
+          name,
+        },
+      })[1];
+
+      if (isNewCategory) {
+        res.status(200).send("Create success");
+      } else {
+        res.status(200).send("Category already exist");
+      }
     } catch (err) {
       res.status(400).send(err);
     }
@@ -38,7 +45,7 @@ module.exports = {
     const { type, name } = req.query;
 
     try {
-      await category.destroy({
+      await Category.destroy({
         where: {
           type,
           name,
