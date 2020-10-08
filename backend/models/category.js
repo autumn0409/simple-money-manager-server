@@ -2,11 +2,9 @@ module.exports = (sequelize, DataTypes) => {
   const category = sequelize.define(
     "category",
     {
-      category_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
+      id: {
+        type: DataTypes.UUID,
         primaryKey: true,
-        autoIncrement: true,
       },
       type: {
         type: DataTypes.STRING,
@@ -20,10 +18,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       timestamps: false,
       freezeTableName: true,
+      underscored: true,
     }
   );
-  //   Category.associate = (models) => {
-  //     Category.belongsToMany(models.Record);
-  //   };
+  category.associate = (models) => {
+    category.hasMany(models.record, { foreignKey: { allowNull: false } });
+  };
   return category;
 };
