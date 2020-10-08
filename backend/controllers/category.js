@@ -30,7 +30,6 @@ module.exports = {
       });
       res.status(200).send("Create success");
     } catch (err) {
-      console.log(err);
       res.status(400).send(err);
     }
   },
