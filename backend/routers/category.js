@@ -9,11 +9,11 @@ const categoryService = require("../services/categoryService");
 // GET
 router.get("", async (req, res) => {
   const { type } = req.query;
-  const data = await categoryService.getCategories(type);
-
-  if (data !== null) {
+  try {
+    const data = await categoryService.getCategories(type);
     res.status(200).json({ categories: data });
-  } else {
+  } catch (err) {
+    console.log(err);
     res.status(500).json(null);
   }
 });
@@ -26,6 +26,7 @@ router.delete("", async (req, res) => {
     await categoryService.deleteCategory(type, name);
     res.status(200).json(null);
   } catch (err) {
+    console.log(err);
     res.status(500).json(null);
   }
 });
