@@ -1,5 +1,8 @@
+/* eslint-disable no-param-reassign */
+const { v4: uuidv4 } = require("uuid");
+
 module.exports = (sequelize, DataTypes) => {
-  const record = sequelize.define(
+  const Record = sequelize.define(
     "record",
     {
       id: {
@@ -29,8 +32,11 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
-  record.associate = (models) => {
-    record.belongsTo(models.category, { foreignKey: { allowNull: false } });
+  Record.associate = (models) => {
+    Record.belongsTo(models.category, { foreignKey: { allowNull: false } });
   };
-  return record;
+  Record.beforeCreate((record) => {
+    record.id = uuidv4();
+  });
+  return Record;
 };
