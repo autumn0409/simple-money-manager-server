@@ -12,9 +12,21 @@ router.get("", async (req, res) => {
   const data = await categoryService.getCategories(type);
 
   if (data !== null) {
-    res.json({ categories: data });
+    res.status(200).json({ categories: data });
   } else {
-    res.status(500);
+    res.status(500).json(null);
+  }
+});
+
+// DELETE
+router.delete("", async (req, res) => {
+  const { type, name } = req.query;
+
+  try {
+    await categoryService.deleteCategory(type, name);
+    res.status(200).json(null);
+  } catch (err) {
+    res.status(500).json(null);
   }
 });
 

@@ -18,6 +18,15 @@ const categoryService = {
       return null;
     }
   },
+
+  deleteCategory: async (type, name) => {
+    await category.destroy({
+      where: {
+        type,
+        name,
+      },
+    });
+  },
 };
 
 module.exports = categoryService;
