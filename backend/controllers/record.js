@@ -38,24 +38,38 @@ module.exports = {
     } = req.body;
 
     try {
-      const targetCategory = await Category.findOne({
-        where: { type, name: category },
+      const targetRecord = await Record.findOne({
+        where: { id },
+        include: [{ model: Category, attributes: ["type", "name"] }],
       });
-      await Record.update(
-        {
-          paymentMethod,
-          remarks,
-          amount,
-          categoryId: targetCategory.id,
-          date,
-        },
-        {
-          where: {
-            id,
+
+      if (
+        targetRecord.paymentMethod !== paymentMethod ||
+        targetRecord.remarks !== remarks ||
+        targetRecord.amount !== amount ||
+        targetRecord.category.type !== type ||
+        targetRecord.category.name !== category ||
+        targetRecord.date.getTime() !== new Date(date).getTime()
+      ) {
+        await Record.update(
+          {
+            paymentMethod,
+            remarks,
+            amount,
+            categoryId: targetRecord.categoryId,
+            date,
           },
-        }
-      );
-      res.status(200).send("Edit success");
+          {
+            where: {
+              id,
+            },
+          }
+        );
+
+        res.status(200).send("Edit success");
+      } else {
+        res.status(200).send("Record not modified");
+      }
     } catch (err) {
       res.status(400).send(err);
     }
