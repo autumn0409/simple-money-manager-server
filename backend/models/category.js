@@ -4,10 +4,18 @@ module.exports = (sequelize, DataTypes) => {
     {
       category_id: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
       },
-      type: DataTypes.STRING,
-      name: DataTypes.STRING,
+      type: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     {
       timestamps: false,
