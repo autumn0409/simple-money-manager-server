@@ -12,5 +12,8 @@ module.exports = {
   rules: {
     "prettier/prettier": "error",
     "no-console": "off",
+    "no-shadow": "off",
+    "import/no-dynamic-require": "off",
+    "global-require": "off",
   },
 };
