@@ -1,8 +1,7 @@
 import axios from 'axios';
+require('dotenv').config()
 
-// const categoryBaseUrl = 'http://localhost:8080/api/category';
-
-const categoryBaseUrl = "https://oop-money-manager.herokuapp.com/api/category"
+const categoryBaseUrl = process.env.REACT_APP_API_BASE_URL + "category"
 
 export const getCategories = (type) => {
     let url = `${categoryBaseUrl}?type=${type}`;

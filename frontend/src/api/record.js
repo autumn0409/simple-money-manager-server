@@ -1,8 +1,7 @@
 import axios from 'axios';
+require('dotenv').config()
 
-// const recordBaseUrl = 'http://localhost:8080/api/record';
-
-const recordBaseUrl = "https://oop-money-manager.herokuapp.com/api/record"
+const recordBaseUrl = process.env.REACT_APP_API_BASE_URL + "record"
 
 export const getMonthRecord = (year, month) => {
 

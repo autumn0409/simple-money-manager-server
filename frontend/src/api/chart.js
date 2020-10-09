@@ -1,8 +1,7 @@
 import axios from 'axios';
+require('dotenv').config()
 
-// const chartBaseUrl = 'http://localhost:8080/api/chart';
-
-const chartBaseUrl = "https://oop-money-manager.herokuapp.com/api/chart"
+const chartBaseUrl = process.env.REACT_APP_API_BASE_URL + "chart"
 
 export const getChart = (year, month, type) => {
     let url = `${chartBaseUrl}?year=${year}&month=${month}&type=${type}`;
