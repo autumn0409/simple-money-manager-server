@@ -4,7 +4,7 @@
 
 ## Demo
 
-<https://oop-money-manager.herokuapp.com/>
+<https://nodejs-money-manager.herokuapp.com/>
 
 ## 功能簡介
 
