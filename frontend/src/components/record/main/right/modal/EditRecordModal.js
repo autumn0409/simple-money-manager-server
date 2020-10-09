@@ -14,7 +14,6 @@ import Datepicker from './modalItems/Datepicker';
 import {
     remarksInput,
     amountInput,
-    amountInputDanger,
     toggleModal,
     setEditRecordForm,
     editRecord,
@@ -43,7 +42,6 @@ class EditRecordModal extends React.Component {
         amount: PropTypes.number,
         remarks: PropTypes.string,
 
-        amountInputDanger: PropTypes.bool,
         show: PropTypes.bool,
     }
 
@@ -56,8 +54,7 @@ class EditRecordModal extends React.Component {
     handleFormSubmit = () => {
         const { id, type, date, paymentMethod, category, amount, remarks, recordDetail, dispatch } = this.props;
 
-        if (!amount || amount < 0) {
-            dispatch(amountInputDanger(true));
+        if (Number(amount) === 0) {
             return;
         }
 
@@ -78,9 +75,10 @@ class EditRecordModal extends React.Component {
 
     handleAmountChange = (e) => {
         const amount = e.target.value;
-        this.props.dispatch(amountInput(Number(amount)));
-        if (amount && this.props.amountInputDanger) {
-            this.props.dispatch(amountInputDanger(false));
+        if (Number(amount)) {
+            this.props.dispatch(amountInput(Number(amount)));
+        } else if (amount === "") {
+            this.props.dispatch(amountInput(0));
         }
     }
 
@@ -165,5 +163,4 @@ export default connect(state => ({
     paymentMethod: state.editRecordForm.paymentMethodDropdown.value,
     category: state.editRecordForm.categoryDropdown.value,
     amount: state.editRecordForm.amount.value,
-    amountInputDanger: state.editRecordForm.amount.danger,
 }))(withStyles(styles)(EditRecordModal));

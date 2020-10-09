@@ -85,13 +85,6 @@ export const amountInput = (amount) => {
     }
 }
 
-export const amountInputDanger = (danger) => {
-    return {
-        type: '@EDIT_RECORD_FORM/AMOUNT_INPUT_DANDER',
-        danger
-    }
-}
-
 export const toggleModal = () => {
     return {
         type: '@EDIT_RECORD_FORM/TOGGLE_MODAL',
