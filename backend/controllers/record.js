@@ -13,6 +13,15 @@ module.exports = {
     try {
       // query records
       const records = await Record.findAll({
+        attributes: [
+          "id",
+          "paymentMethod",
+          "remarks",
+          "amount",
+          "date",
+          "category.type",
+          "category.name",
+        ],
         where: {
           [sequelize.Op.and]: [
             sequelize.where(sequelize.fn("YEAR", sequelize.col("date")), year),
@@ -22,9 +31,8 @@ module.exports = {
             ),
           ],
         },
-        include: [
-          { model: Category, attributes: ["type", "name"], required: true },
-        ],
+        include: [{ model: Category, attributes: [] }],
+        raw: true,
       });
 
       let dailyRecords = {};
@@ -35,26 +43,17 @@ module.exports = {
         let recordExpenses = 0;
         let recordIncome = 0;
 
-        if (record.category.type === "expenses") {
+        if (record.type === "expenses") {
           recordExpenses = record.amount;
-        } else if (record.category.type === "income") {
+          expenses += recordExpenses;
+        } else if (record.type === "income") {
           recordIncome = record.amount;
+          income += recordIncome;
         }
-
-        income += recordIncome;
-        expenses += recordExpenses;
 
         // create recordItem
         const dateOfRecord = new Date(record.date).getDate();
-        const recordItem = {
-          date: record.date,
-          amount: record.amount,
-          paymentMethod: record.paymentMethod,
-          id: record.id,
-          remarks: record.remarks,
-          type: record.category.type,
-          category: record.category.name,
-        };
+        const recordItem = { ...record };
 
         // insert recordItem into dailyRecords
         if (!(dateOfRecord in dailyRecords)) {
@@ -76,13 +75,12 @@ module.exports = {
         return dailyRecords[date];
       });
 
-      const result = {
+      res.status(200).json({
         month,
         income,
         expenses,
         dailyRecords,
-      };
-      res.status(200).json(result);
+      });
     } catch (err) {
       res.status(400).send("Get Error");
     }
@@ -121,16 +119,26 @@ module.exports = {
 
     try {
       const targetRecord = await Record.findOne({
+        attributes: [
+          "paymentMethod",
+          "remarks",
+          "amount",
+          "date",
+          "categoryId",
+          "category.type",
+          "category.name",
+        ],
         where: { id },
-        include: [{ model: Category, attributes: ["type", "name"] }],
+        include: [{ model: Category, attributes: [] }],
+        raw: true,
       });
 
       if (
         targetRecord.paymentMethod !== paymentMethod ||
         targetRecord.remarks !== remarks ||
         targetRecord.amount !== amount ||
-        targetRecord.category.type !== type ||
-        targetRecord.category.name !== category ||
+        targetRecord.type !== type ||
+        targetRecord.name !== category ||
         targetRecord.date.getTime() !== new Date(date).getTime()
       ) {
         await Record.update(
