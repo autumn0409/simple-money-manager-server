@@ -52,14 +52,17 @@ module.exports = {
         }
 
         // create recordItem
-        const dateOfRecord = new Date(record.date).getDate();
-        const recordItem = { ...record };
+        const { name, date, ...recordItem } = record;
+        recordItem.category = name;
+        recordItem.date = date.getTime();
 
         // insert recordItem into dailyRecords
+        const dateOfRecord = record.date.getDate();
         if (!(dateOfRecord in dailyRecords)) {
           const dailyRecordObj = {
             income: recordIncome,
             expenses: recordExpenses,
+            date: record.date.getTime(),
             recordItems: [recordItem],
           };
           dailyRecords[dateOfRecord] = dailyRecordObj;
