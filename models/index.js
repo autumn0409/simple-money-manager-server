@@ -10,11 +10,20 @@ const config = require("../config/config.js")[env];
 
 const db = {};
 
-const sequelize = new Sequelize(
-  config.database,
-  config.username,
-  config.password,
-  {
+let sequelize = null;
+
+if (process.env.CLEARDB_DATABASE_URL) {
+  sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL, {
+    dialect: config.dialect,
+    protocol: config.protocol,
+    pool: {
+      max: 10,
+      min: 0,
+      idle: 30000,
+    },
+  });
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, {
     host: config.host,
     dialect: config.dialect,
     pool: {
@@ -22,8 +31,8 @@ const sequelize = new Sequelize(
       min: 0,
       idle: 30000,
     },
-  }
-);
+  });
+}
 
 fs.readdirSync(__dirname)
   .filter((file) => {
