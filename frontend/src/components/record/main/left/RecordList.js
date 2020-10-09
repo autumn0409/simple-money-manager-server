@@ -10,10 +10,10 @@ class RecordList extends React.Component {
     render() {
         const { dailyRecords } = this.props;
 
-        let children = dailyRecords.map((dailyRecord) => {
+        let children = dailyRecords.map((dailyRecord, index) => {
 
             return <DailyRecord
-                key={dailyRecord.id}
+                key={index}
                 recordItems={dailyRecord.recordItems}
                 date={dailyRecord.date}
                 income={dailyRecord.income}
