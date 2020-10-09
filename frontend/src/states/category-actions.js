@@ -4,6 +4,8 @@ import {
     deleteCategory as deleteCategoryFromApi,
 } from '../api/category'
 
+import { getChart } from './chart-actions';
+import { getMonthRecord, resetRecordSelected } from './record-actions';
 
 /* Category */
 
@@ -47,9 +49,17 @@ export const getCategory = (loading = false) => {
 }
 
 export const deleteCategory = (type, name) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         return deleteCategoryFromApi(type, name).then(() => {
+            const year = getState().year;
+            const month = getState().month;
+            const type = getState().chart.typeDropdown.value;
+            
             dispatch(getCategory());
+            dispatch(getMonthRecord(year, month));
+            dispatch(getChart(year, month, type));
+        }).then(() => {
+            dispatch(resetRecordSelected());
         });
     }
 }
