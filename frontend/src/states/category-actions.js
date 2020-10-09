@@ -38,15 +38,9 @@ export const getCategory = (loading = false) => {
         if (!loading)
             dispatch(startLoading());
 
-        const getExpensesCategories = getCategoriesFromApi('expenses').then(data => {
-            dispatch(endListExpensesCategories(data.categories));
-        });
-
-        const getIncomeCategories = getCategoriesFromApi('income').then(data => {
-            dispatch(endListIncomeCategories(data.categories));
-        });
-
-        return Promise.all([getExpensesCategories, getIncomeCategories]).then(() => {
+        getCategoriesFromApi().then(data => {
+            dispatch(endListExpensesCategories(data.expenses));
+            dispatch(endListIncomeCategories(data.income));
             dispatch(endLoading());
         });
     }

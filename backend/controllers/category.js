@@ -4,17 +4,25 @@ const Category = db.category;
 
 module.exports = {
   getCategories: async (req, res) => {
-    const { type } = req.query;
-
     try {
       const queryResult = await Category.findAll({
-        where: { type },
-        attributes: ["name"],
+        attributes: ["name", "type"],
       });
-      const data = queryResult.map((row) => {
-        return row.name;
+
+      const incomeCategories = [];
+      const expensesCategories = [];
+      queryResult.forEach((row) => {
+        if (row.type === "income") {
+          incomeCategories.push(row.name);
+        } else {
+          expensesCategories.push(row.name);
+        }
       });
-      res.status(200).json({ categories: data });
+
+      res.status(200).json({
+        income: incomeCategories,
+        expenses: expensesCategories,
+      });
     } catch (err) {
       res.status(400).send(err);
     }
