@@ -4,7 +4,7 @@ import './RecordItem.css';
 
 class RecordItem extends React.Component {
     render() {
-        const { type, paymentMethod, category, amount, remarks } = this.props;
+        const { type,  category, amount, remarks } = this.props;
 
         return (
             <div className='d-flex flex-row justify-content-between record-item'>
