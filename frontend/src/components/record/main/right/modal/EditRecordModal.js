@@ -52,7 +52,7 @@ class EditRecordModal extends React.Component {
     };
 
     handleFormSubmit = () => {
-        const { id, type, date, paymentMethod, category, amount, remarks, recordDetail, dispatch } = this.props;
+        const { id, type, date, paymentMethod, category, amount, remarks, dispatch } = this.props;
 
         if (Number(amount) === 0) {
             return;
