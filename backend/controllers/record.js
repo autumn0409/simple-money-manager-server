@@ -120,6 +120,18 @@ module.exports = {
       remarks,
     } = req.body;
 
+    const getCategoryId = (type, name) => {
+      return Category.findOne({
+        where: {
+          type,
+          name,
+        },
+        raw: true,
+      }).then((category) => {
+        return category.id;
+      });
+    };
+
     try {
       const targetRecord = await Record.findOne({
         attributes: [
@@ -136,20 +148,25 @@ module.exports = {
         raw: true,
       });
 
+      // check whether category is changed
+      let categoryIdAfter = targetRecord.categoryId;
+      if (targetRecord.type !== type || targetRecord.name !== category) {
+        categoryIdAfter = await getCategoryId(type, category);
+      }
+
       if (
         targetRecord.paymentMethod !== paymentMethod ||
         targetRecord.remarks !== remarks ||
         targetRecord.amount !== amount ||
-        targetRecord.type !== type ||
-        targetRecord.name !== category ||
-        targetRecord.date.getTime() !== new Date(date).getTime()
+        targetRecord.date.getTime() !== new Date(date).getTime() ||
+        categoryIdAfter !== targetRecord.categoryId
       ) {
         await Record.update(
           {
             paymentMethod,
             remarks,
             amount,
-            categoryId: targetRecord.categoryId,
+            categoryId: categoryIdAfter,
             date,
           },
           {
@@ -164,6 +181,7 @@ module.exports = {
         res.status(200).send("Record not modified");
       }
     } catch (err) {
+      console.log(err);
       res.status(400).send(err);
     }
   },
