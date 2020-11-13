@@ -1,6 +1,8 @@
 # Simple Money Manager
 
-一個使用 Node.js/Express + MySQL 的簡易記帳系統，除了提供直覺美觀的 GUI ，也提供了資料庫存取來儲存這些帳務紀錄。
+一個簡易記帳系統，除了提供直覺美觀的 GUI ，也提供了資料庫存取來儲存這些帳務紀錄。
+* 前端: React / Redux
+* 後端: Node.js / Express / MySQL
 
 ## Demo
 
